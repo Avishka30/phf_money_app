@@ -7,10 +7,8 @@ class MainWrapper extends StatelessWidget {
     required this.navigationShell,
   });
 
-  // StatefulNavigationShell holds the state of our bottom navigation branches
   final StatefulNavigationShell navigationShell;
 
-  // Handles navigation between bottom tabs
   void _goBranch(int index) {
     navigationShell.goBranch(
       index,
@@ -18,7 +16,6 @@ class MainWrapper extends StatelessWidget {
     );
   }
 
-  // Shows a bottom sheet with options to add an Account or a Transaction
   void _showAddOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -46,7 +43,7 @@ class MainWrapper extends StatelessWidget {
                   subtitle: const Text('Create a bank or cash account'),
                   onTap: () {
                     Navigator.pop(context); // Close the bottom sheet
-                    // TODO: Navigate to Add Account Page
+                    context.push('/add-account'); // Navigate to Add Account Page
                   },
                 ),
                 ListTile(
@@ -73,7 +70,6 @@ class MainWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
-      // Floating Action Button for adding new entries globally
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddOptions(context),
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -81,7 +77,6 @@ class MainWrapper extends StatelessWidget {
         elevation: 4,
         child: const Icon(Icons.add),
       ),
-      // Bottom Navigation Bar
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: _goBranch,

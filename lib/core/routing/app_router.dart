@@ -3,6 +3,7 @@ import '../widgets/main_wrapper.dart';
 import '../../features/dashboard/presentation/pages/dashboard_page.dart';
 import '../../features/transactions/presentation/pages/transactions_page.dart';
 import '../../features/budgets/presentation/pages/budgets_page.dart';
+import '../../features/accounts/presentation/pages/add_account_page.dart';
 
 // GoRouter configuration with StatefulShellRoute for Bottom Navigation
 final GoRouter appRouter = GoRouter(
@@ -10,11 +11,9 @@ final GoRouter appRouter = GoRouter(
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        // Returns the MainWrapper which contains the BottomNavigationBar
         return MainWrapper(navigationShell: navigationShell);
       },
       branches: [
-        // Branch 1: Dashboard
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -23,7 +22,6 @@ final GoRouter appRouter = GoRouter(
             ),
           ],
         ),
-        // Branch 2: Transactions
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -32,7 +30,6 @@ final GoRouter appRouter = GoRouter(
             ),
           ],
         ),
-        // Branch 3: Budgets
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -42,6 +39,11 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
       ],
+    ),
+    // New Route for Add Account Page (Placed outside the shell to cover the bottom nav bar)
+    GoRoute(
+      path: '/add-account',
+      builder: (context, state) => const AddAccountPage(),
     ),
   ],
 );
