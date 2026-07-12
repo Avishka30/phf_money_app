@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../providers/transaction_provider.dart';
 
-class AddTransactionPage extends StatefulWidget {
+class AddTransactionPage extends ConsumerStatefulWidget {
   const AddTransactionPage({super.key});
 
   @override
-  State<AddTransactionPage> createState() => _AddTransactionPageState();
+  ConsumerState<AddTransactionPage> createState() => _AddTransactionPageState();
 }
 
-class _AddTransactionPageState extends State<AddTransactionPage> {
+class _AddTransactionPageState extends ConsumerState<AddTransactionPage> {
   final _formKey = GlobalKey<FormState>();
-  String _transactionType = 'Expense'; // Default selection
+  String _transactionType = 'Expense'; 
   final _amountController = TextEditingController();
   final _noteController = TextEditingController();
 
@@ -35,7 +37,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // 1. Income or Expense Selection
               SegmentedButton<String>(
                 segments: const [
                   ButtonSegment(
@@ -57,8 +58,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 },
               ),
               const SizedBox(height: 24),
-              
-              // 2. Amount Field
               TextFormField(
                 controller: _amountController,
                 keyboardType: TextInputType.number,
@@ -69,12 +68,11 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Please enter an amount';
+                  if (double.tryParse(value) == null) return 'Enter a valid number';
                   return null;
                 },
               ),
               const SizedBox(height: 16),
-
-              // 3. Note/Description Field
               TextFormField(
                 controller: _noteController,
                 decoration: const InputDecoration(
@@ -88,15 +86,18 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 },
               ),
               const SizedBox(height: 32),
-
-              // 4. Save Button
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // For now, just show a message and go back
+                    final amount = double.parse(_amountController.text);
+                    final note = _noteController.text;
+
+                    ref.read(transactionProvider.notifier)
+                       .addTransaction(_transactionType, amount, note);
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Success: $_transactionType of Rs.${_amountController.text} added!'),
+                        content: Text('Success: $_transactionType of Rs.$amount added!'),
                         backgroundColor: Colors.green,
                       ),
                     );
