@@ -4,6 +4,7 @@ import '../../features/dashboard/presentation/pages/dashboard_page.dart';
 import '../../features/transactions/presentation/pages/transactions_page.dart';
 import '../../features/budgets/presentation/pages/budgets_page.dart';
 import '../../features/accounts/presentation/pages/add_account_page.dart';
+import '../../features/transactions/presentation/pages/add_transaction_page.dart'; // අලුත් Import එක
 
 // GoRouter configuration with StatefulShellRoute for Bottom Navigation
 final GoRouter appRouter = GoRouter(
@@ -40,10 +41,15 @@ final GoRouter appRouter = GoRouter(
         ),
       ],
     ),
-    // New Route for Add Account Page (Placed outside the shell to cover the bottom nav bar)
+    // Route for Add Account Page 
     GoRoute(
       path: '/add-account',
       builder: (context, state) => const AddAccountPage(),
+    ),
+    // අලුතින්ම දාපු Route එක (Add Transaction Page)
+    GoRoute(
+      path: '/add-transaction',
+      builder: (context, state) => const AddTransactionPage(),
     ),
   ],
 );

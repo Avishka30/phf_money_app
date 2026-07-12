@@ -55,7 +55,7 @@ class MainWrapper extends StatelessWidget {
                   subtitle: const Text('Add income, expense, or transfer'),
                   onTap: () {
                     Navigator.pop(context); // Close the bottom sheet
-                    // TODO: Navigate to Add Transaction Page
+                    context.push('/add-transaction'); // Navigate to Add Transaction Page
                   },
                 ),
               ],
