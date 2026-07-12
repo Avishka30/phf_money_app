@@ -5,7 +5,7 @@ import '../../../accounts/presentation/providers/account_provider.dart';
 
 class AppTransaction {
   final int id;
-  final String type; 
+  final String type;
   final double amount;
   final String note;
   final DateTime date;
@@ -41,7 +41,7 @@ class TransactionNotifier extends Notifier<List<AppTransaction>> {
   @override
   List<AppTransaction> build() {
     _loadTransactions();
-    return []; 
+    return [];
   }
 
   Future<void> _loadTransactions() async {
@@ -55,7 +55,9 @@ class TransactionNotifier extends Notifier<List<AppTransaction>> {
 
   Future<void> _saveTransactions(List<AppTransaction> transactions) async {
     final prefs = await SharedPreferences.getInstance();
-    final String encoded = jsonEncode(transactions.map((tx) => tx.toJson()).toList());
+    final String encoded = jsonEncode(
+      transactions.map((tx) => tx.toJson()).toList(),
+    );
     await prefs.setString(_key, encoded);
   }
 
@@ -67,17 +69,19 @@ class TransactionNotifier extends Notifier<List<AppTransaction>> {
       note: note,
       date: DateTime.now(),
     );
-    
-    state = [...state, newTx];
-    _saveTransactions(state); 
 
-    final accountRepo = ref.read(accountRepositoryProvider) as MockAccountRepository;
+    state = [...state, newTx];
+    _saveTransactions(state);
+
+    final accountRepo =
+        ref.read(accountRepositoryProvider) as MockAccountRepository;
     accountRepo.updateBalance(type == 'Income' ? amount : -amount);
-    
+
     ref.invalidate(accountsProvider);
   }
 }
 
-final transactionProvider = NotifierProvider<TransactionNotifier, List<AppTransaction>>(() {
-  return TransactionNotifier();
-});
+final transactionProvider =
+    NotifierProvider<TransactionNotifier, List<AppTransaction>>(() {
+      return TransactionNotifier();
+    });

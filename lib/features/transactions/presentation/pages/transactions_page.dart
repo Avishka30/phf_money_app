@@ -34,11 +34,16 @@ class TransactionsPage extends ConsumerWidget {
                 final isIncome = tx.type == 'Income';
 
                 return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   elevation: 1,
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: isIncome ? Colors.green.withAlpha(30) : Colors.red.withAlpha(30),
+                      backgroundColor: isIncome
+                          ? Colors.green.withAlpha(30)
+                          : Colors.red.withAlpha(30),
                       child: Icon(
                         isIncome ? Icons.arrow_downward : Icons.arrow_upward,
                         color: isIncome ? Colors.green : Colors.red,
@@ -48,7 +53,9 @@ class TransactionsPage extends ConsumerWidget {
                       tx.note,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text('${tx.date.year}-${tx.date.month.toString().padLeft(2, '0')}-${tx.date.day.toString().padLeft(2, '0')}'),
+                    subtitle: Text(
+                      '${tx.date.year}-${tx.date.month.toString().padLeft(2, '0')}-${tx.date.day.toString().padLeft(2, '0')}',
+                    ),
                     trailing: Text(
                       '${isIncome ? '+' : '-'} Rs. ${tx.amount.toStringAsFixed(2)}',
                       style: TextStyle(

@@ -41,7 +41,7 @@ final GoRouter appRouter = GoRouter(
         ),
       ],
     ),
-    // Route for Add Account Page 
+    // Route for Add Account Page
     GoRoute(
       path: '/add-account',
       builder: (context, state) => const AddAccountPage(),

@@ -16,7 +16,7 @@ class MoneyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // Connects the router we created
-      routerConfig: appRouter, 
+      routerConfig: appRouter,
     );
   }
 }

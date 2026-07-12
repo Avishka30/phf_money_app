@@ -12,7 +12,7 @@ class AddTransactionPage extends ConsumerStatefulWidget {
 
 class _AddTransactionPageState extends ConsumerState<AddTransactionPage> {
   final _formKey = GlobalKey<FormState>();
-  String _transactionType = 'Expense'; 
+  String _transactionType = 'Expense';
   final _amountController = TextEditingController();
   final _noteController = TextEditingController();
 
@@ -67,8 +67,10 @@ class _AddTransactionPageState extends ConsumerState<AddTransactionPage> {
                   prefixIcon: Icon(Icons.attach_money),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Please enter an amount';
-                  if (double.tryParse(value) == null) return 'Enter a valid number';
+                  if (value == null || value.isEmpty)
+                    return 'Please enter an amount';
+                  if (double.tryParse(value) == null)
+                    return 'Enter a valid number';
                   return null;
                 },
               ),
@@ -81,7 +83,8 @@ class _AddTransactionPageState extends ConsumerState<AddTransactionPage> {
                   prefixIcon: Icon(Icons.description),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Please enter a note';
+                  if (value == null || value.isEmpty)
+                    return 'Please enter a note';
                   return null;
                 },
               ),
@@ -92,12 +95,15 @@ class _AddTransactionPageState extends ConsumerState<AddTransactionPage> {
                     final amount = double.parse(_amountController.text);
                     final note = _noteController.text;
 
-                    ref.read(transactionProvider.notifier)
-                       .addTransaction(_transactionType, amount, note);
+                    ref
+                        .read(transactionProvider.notifier)
+                        .addTransaction(_transactionType, amount, note);
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Success: $_transactionType of Rs.$amount added!'),
+                        content: Text(
+                          'Success: $_transactionType of Rs.$amount added!',
+                        ),
                         backgroundColor: Colors.green,
                       ),
                     );
@@ -109,7 +115,10 @@ class _AddTransactionPageState extends ConsumerState<AddTransactionPage> {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                child: const Text('Save Transaction', style: TextStyle(fontSize: 16)),
+                child: const Text(
+                  'Save Transaction',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ],
           ),

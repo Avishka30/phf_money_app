@@ -9,15 +9,15 @@ class BudgetsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch all transactions
     final transactions = ref.watch(transactionProvider);
-    
+
     // Set a budget limit
     final double budgetLimit = 50000.0;
-    
+
     // Calculate total expenses from the transaction list
     final double currentSpent = transactions
         .where((tx) => tx.type == 'Expense')
         .fold(0.0, (sum, tx) => sum + tx.amount);
-        
+
     final double progress = (currentSpent / budgetLimit).clamp(0.0, 1.0);
 
     return Scaffold(
@@ -35,10 +35,15 @@ class BudgetsPage extends ConsumerWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    const Text('Monthly Expense Budget', 
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Monthly Expense Budget',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 16),
-                    
+
                     // Live Progress bar
                     LinearProgressIndicator(
                       value: progress,

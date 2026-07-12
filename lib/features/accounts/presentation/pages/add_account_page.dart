@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/account_provider.dart'; 
+import '../providers/account_provider.dart';
 
 class AddAccountPage extends ConsumerStatefulWidget {
   const AddAccountPage({super.key});
@@ -31,7 +31,7 @@ class _AddAccountPageState extends ConsumerState<AddAccountPage> {
       ref.invalidate(accountsProvider);
 
       if (mounted) {
-        Navigator.of(context).pop(); 
+        Navigator.of(context).pop();
       }
     }
   }
@@ -88,7 +88,10 @@ class _AddAccountPageState extends ConsumerState<AddAccountPage> {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Save Account', style: TextStyle(fontSize: 16)),
+                child: const Text(
+                  'Save Account',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ],
           ),

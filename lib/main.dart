@@ -7,9 +7,5 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Wrapping the entire app with ProviderScope to enable Riverpod state management
-  runApp(
-    const ProviderScope(
-      child: MoneyApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: MoneyApp()));
 }

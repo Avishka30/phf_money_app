@@ -17,25 +17,29 @@ class MockAccountRepository implements AccountRepository {
   Future<void> _loadInitialData() async {
     final prefs = await SharedPreferences.getInstance();
     final String? data = prefs.getString(_key);
-    
+
     if (data != null) {
       final List<dynamic> decoded = jsonDecode(data);
       _accounts.clear();
       for (var item in decoded) {
-        _accounts.add(domain.Account(
-          id: item['id'],
-          name: item['name'],
-          balance: item['balance'],
-          createdAt: DateTime.parse(item['createdAt']),
-        ));
+        _accounts.add(
+          domain.Account(
+            id: item['id'],
+            name: item['name'],
+            balance: item['balance'],
+            createdAt: DateTime.parse(item['createdAt']),
+          ),
+        );
       }
     } else {
-      _accounts.add(domain.Account(
-        id: 1,
-        name: 'Default Wallet',
-        balance: 0.0,
-        createdAt: DateTime.now(),
-      ));
+      _accounts.add(
+        domain.Account(
+          id: 1,
+          name: 'Default Wallet',
+          balance: 0.0,
+          createdAt: DateTime.now(),
+        ),
+      );
       _saveAccounts();
     }
     _updateTotal();
@@ -43,12 +47,16 @@ class MockAccountRepository implements AccountRepository {
 
   Future<void> _saveAccounts() async {
     final prefs = await SharedPreferences.getInstance();
-    final List<Map<String, dynamic>> mappedList = _accounts.map((acc) => {
-      'id': acc.id,
-      'name': acc.name,
-      'balance': acc.balance,
-      'createdAt': acc.createdAt.toIso8601String(),
-    }).toList();
+    final List<Map<String, dynamic>> mappedList = _accounts
+        .map(
+          (acc) => {
+            'id': acc.id,
+            'name': acc.name,
+            'balance': acc.balance,
+            'createdAt': acc.createdAt.toIso8601String(),
+          },
+        )
+        .toList();
     await prefs.setString(_key, jsonEncode(mappedList));
   }
 
@@ -69,10 +77,9 @@ class MockAccountRepository implements AccountRepository {
     return newAccount.id;
   }
 
- 
   Future<void> updateBalance(double amountChange) async {
     if (_accounts.isNotEmpty) {
-      final acc = _accounts[0]; 
+      final acc = _accounts[0];
       _accounts[0] = domain.Account(
         id: acc.id,
         name: acc.name,

@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MainWrapper extends StatelessWidget {
-  const MainWrapper({
-    super.key,
-    required this.navigationShell,
-  });
+  const MainWrapper({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
@@ -37,13 +34,18 @@ class MainWrapper extends StatelessWidget {
                 ListTile(
                   leading: const CircleAvatar(
                     backgroundColor: Colors.blueAccent,
-                    child: Icon(Icons.account_balance_wallet, color: Colors.white),
+                    child: Icon(
+                      Icons.account_balance_wallet,
+                      color: Colors.white,
+                    ),
                   ),
                   title: const Text('New Account'),
                   subtitle: const Text('Create a bank or cash account'),
                   onTap: () {
                     Navigator.pop(context); // Close the bottom sheet
-                    context.push('/add-account'); // Navigate to Add Account Page
+                    context.push(
+                      '/add-account',
+                    ); // Navigate to Add Account Page
                   },
                 ),
                 ListTile(
@@ -55,7 +57,9 @@ class MainWrapper extends StatelessWidget {
                   subtitle: const Text('Add income, expense, or transfer'),
                   onTap: () {
                     Navigator.pop(context); // Close the bottom sheet
-                    context.push('/add-transaction'); // Navigate to Add Transaction Page
+                    context.push(
+                      '/add-transaction',
+                    ); // Navigate to Add Transaction Page
                   },
                 ),
               ],
