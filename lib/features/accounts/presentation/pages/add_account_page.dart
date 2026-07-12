@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import '../providers/account_provider.dart';
+import '../providers/account_provider.dart'; 
 
 class AddAccountPage extends ConsumerStatefulWidget {
   const AddAccountPage({super.key});
@@ -11,9 +10,9 @@ class AddAccountPage extends ConsumerStatefulWidget {
 }
 
 class _AddAccountPageState extends ConsumerState<AddAccountPage> {
-  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _balanceController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -24,21 +23,15 @@ class _AddAccountPageState extends ConsumerState<AddAccountPage> {
 
   void _saveAccount() async {
     if (_formKey.currentState!.validate()) {
-      final name = _nameController.text;
-      final balance = double.parse(_balanceController.text);
+      final name = _nameController.text.trim();
+      final balance = double.tryParse(_balanceController.text.trim()) ?? 0.0;
 
-      // Save to database using the repository provider
-      final repo = ref.read(accountRepositoryProvider);
-      await repo.addAccount(name, balance);
+      await ref.read(accountRepositoryProvider).addAccount(name, balance);
 
-      // Refresh the accounts list to show the new data
       ref.invalidate(accountsProvider);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Account added successfully! 🎉')),
-        );
-        context.pop(); // Go back to the previous screen
+        Navigator.of(context).pop(); 
       }
     }
   }
@@ -47,7 +40,7 @@ class _AddAccountPageState extends ConsumerState<AddAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Account'),
+        title: const Text('Add Account'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Padding(
@@ -55,39 +48,47 @@ class _AddAccountPageState extends ConsumerState<AddAccountPage> {
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(
-                  labelText: 'Account Name (e.g. Cash, Bank)',
+                  labelText: 'Account Name (e.g. Bank, Cash)',
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.account_balance_wallet),
                 ),
-                validator: (value) => value!.isEmpty ? 'Please enter a name' : null,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a name';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _balanceController,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 decoration: const InputDecoration(
-                  labelText: 'Starting Balance (Rs.)',
+                  labelText: 'Starting Balance',
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.attach_money),
+                  prefixText: 'Rs. ',
                 ),
+                keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Please enter an amount';
-                  if (double.tryParse(value) == null) return 'Please enter a valid number';
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter balance';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid number';
+                  }
                   return null;
                 },
               ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: FilledButton(
-                  onPressed: _saveAccount,
-                  child: const Text('Save Account', style: TextStyle(fontSize: 16)),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: _saveAccount,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
+                child: const Text('Save Account', style: TextStyle(fontSize: 16)),
               ),
             ],
           ),
