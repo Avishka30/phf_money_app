@@ -9,11 +9,40 @@ class DashboardPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dashboard'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        elevation: 0,
       ),
-      body: const Center(
-        child: Text(
-          'Welcome to Dashboard! 📊',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Total Balance',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Rs. 0.00',
+              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+            // Placeholder for the Fl_Chart that we will add later
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Income & Expense Chart\nWill Go Here 📈',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, color: Colors.blue),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
