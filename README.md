@@ -1,17 +1,29 @@
-# phf_money_app
+# PHF Money Management App
 
-A new Flutter project.
+## Overview
+[cite_start]Offline-first Flutter money management app built using Clean Architecture. [cite_start]The application is designed to help users track personal or small-business income and expenses[cite: 29].
 
-## Getting Started
+## Features Completed
+- **Accounts**: Create and view accounts (Cash, Bank, Wallet).
+- **Transactions**: Add income/expense transactions and view the history list.
+- **Dashboard**: Real-time updates for total balance and financial overview.
+- **Budget Tracking**: UI implementation for monthly budget monitoring.
+- [cite_start]**Clean Architecture**: Structured into Presentation, Domain, and Data layers for scalability[cite: 68].
 
-This project is a starting point for a Flutter application.
+## Tech Stack
+[cite_start]Flutter, Riverpod, GoRouter, intl, fl_chart, uuid, equatable.
 
-A few resources to get you started if this is your first Flutter project:
+## How to Run
+1. `flutter pub get`
+2. `flutter run`
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## How to Build APK
+`flutter build apk --release`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Known Issues
+- **Local Persistence**: The integration of Drift/SQLite is currently incomplete. [cite_start]Data is handled via in-memory state management during the current MVP phase.
+- **Reports**: Advanced category breakdown charts are pending final integration.
+
+## Handover Notes
+- **Completed**: Core UI, Navigation, State Management (Riverpod), Account/Transaction logic.
+- **Pending**: Full local database persistence (Drift) and advanced reporting charts.
